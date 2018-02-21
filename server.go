@@ -18,6 +18,7 @@ func (app *App) NewServer() {
 	r.Handle("/", appHandler(app.rootHandler))
 	s := r.PathPrefix("/latest/meta-data").Subrouter()
 	s.Handle("/instance-id", appHandler(app.instanceIDHandler))
+	s.Handle("/instance-type", appHandler(app.instanceTypeHandler))
 	s.Handle("/local-hostname", appHandler(app.localHostnameHandler))
 	s.Handle("/local-ipv4", appHandler(app.privateIpHandler))
 
@@ -75,6 +76,10 @@ latest`)
 
 func (app *App) instanceIDHandler(w http.ResponseWriter, r *http.Request) {
 	write(w, app.InstanceID)
+}
+
+func (app *App) instanceTypeHandler(w http.ResponseWriter, r *http.Request) {
+	write(w, app.InstanceType)
 }
 
 func (app *App) localHostnameHandler(w http.ResponseWriter, r *http.Request) {

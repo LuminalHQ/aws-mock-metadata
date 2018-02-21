@@ -14,6 +14,7 @@ type App struct {
 	AppPort          string
 	Hostname         string
 	InstanceID       string
+	InstanceType     string
 	PrivateIp        string
 	RoleArn          string
 	RoleName         string
@@ -39,6 +40,7 @@ func (app *App) addFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&app.AppPort, "app-port", app.AppPort, "Http port")
 	fs.StringVar(&app.Hostname, "hostname", app.Hostname, "ec2 instance hostname")
 	fs.StringVar(&app.InstanceID, "instance-id", app.InstanceID, "ec2 instance id")
+	fs.StringVar(&app.InstanceType, "instance-type", app.InstanceType, "ec2 instance type")
 	fs.StringVar(&app.PrivateIp, "private-ip", app.PrivateIp, "Private ip")
 	fs.StringVar(&app.RoleArn, "role-arn", app.RoleArn, "IAM role Arn")
 	fs.StringVar(&app.RoleName, "role-name", app.RoleName, "IAM role name")
