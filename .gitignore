@@ -1,3 +1,4 @@
+aws-mock-metadata*
 bin/aws-mock-metadata*
 bin/pf.conf
 .env
