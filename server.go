@@ -21,6 +21,7 @@ func (app *App) NewServer() {
 	s.Handle("/instance-type", appHandler(app.instanceTypeHandler))
 	s.Handle("/local-hostname", appHandler(app.localHostnameHandler))
 	s.Handle("/local-ipv4", appHandler(app.privateIpHandler))
+	s.Handle("/ami-id", appHandler(app.amiID))
 
 	p := s.PathPrefix("/placement").Subrouter()
 	p.Handle("/availability-zone", appHandler(app.availabilityZoneHandler))
@@ -110,6 +111,10 @@ func (app *App) localHostnameHandler(w http.ResponseWriter, r *http.Request) {
 
 func (app *App) privateIpHandler(w http.ResponseWriter, r *http.Request) {
 	write(w, app.PrivateIp)
+}
+
+func (app *App) amiID(w http.ResponseWriter, r *http.Request) {
+	write(w, app.AmiID)
 }
 
 func (app *App) availabilityZoneHandler(w http.ResponseWriter, r *http.Request) {

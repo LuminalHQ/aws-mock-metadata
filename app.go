@@ -21,6 +21,7 @@ type App struct {
 	RoleName           string
 	Verbose            bool
 	VpcID              string
+	AmiID              string
 }
 
 func main() {
@@ -48,4 +49,5 @@ func (app *App) addFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&app.RoleName, "role-name", app.RoleName, "IAM role name")
 	fs.BoolVar(&app.Verbose, "verbose", false, "Verbose")
 	fs.StringVar(&app.VpcID, "vpc-id", app.VpcID, "VPC id")
+	fs.StringVar(&app.AmiID, "ami-id", app.AmiID, "AMI id")
 }
