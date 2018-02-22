@@ -28,6 +28,7 @@ func (app *App) NewServer() {
 	i.Handle("/security-credentials", appHandler(app.trailingSlashRedirect))
 	i.Handle("/security-credentials/", appHandler(app.securityCredentialsHandler))
 	i.Handle("/security-credentials/"+app.RoleName, appHandler(app.roleHandler))
+	i.Handle("/info", appHandler(app.iamInfo))
 
 	n := s.PathPrefix("/network/interfaces").Subrouter()
 	n.Handle("/macs", appHandler(app.macHandler))
@@ -80,6 +81,27 @@ func (app *App) instanceIDHandler(w http.ResponseWriter, r *http.Request) {
 
 func (app *App) instanceTypeHandler(w http.ResponseWriter, r *http.Request) {
 	write(w, app.InstanceType)
+}
+
+// IAMInfo represents the iam/info response
+type IAMInfo struct {
+	Code               string
+	LastUpdated        string
+	InstanceProfileArn string
+	InstanceProfileID  string `json:"InstanceProfileId"`
+}
+
+func (app *App) iamInfo(w http.ResponseWriter, r *http.Request) {
+	document := IAMInfo{
+		Code:               "Success",
+		LastUpdated:        time.Now().Format("2006-01-02T15:04:05Z"),
+		InstanceProfileArn: app.InstanceProfileArn,
+		InstanceProfileID:  "",
+	}
+	if err := json.NewEncoder(w).Encode(document); err != nil {
+		log.Errorf("Error sending json %+v", err)
+		http.Error(w, err.Error(), 500)
+	}
 }
 
 func (app *App) localHostnameHandler(w http.ResponseWriter, r *http.Request) {
