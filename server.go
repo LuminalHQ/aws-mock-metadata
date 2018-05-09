@@ -14,6 +14,9 @@ import (
 
 // NewServer creates and starts a new http server
 func (app *App) NewServer() {
+
+	app.StartTime = time.Now().UTC()
+
 	r := mux.NewRouter()
 	r.Handle("/", appHandler(app.rootHandler))
 	s := r.PathPrefix("/latest/meta-data").Subrouter()
@@ -171,13 +174,13 @@ func (app *App) instanceIdentityHandler(w http.ResponseWriter, r *http.Request) 
 		Region:             app.AvailabilityZone[:len(app.AvailabilityZone)-1],
 		DevpayProductCodes: nil,
 		PrivateIp:          "127.0.0.1",
-		Version:            "2010-08-31",
-		InstanceId:         "i-wxyz1234",
+		Version:            "2017-09-30",
+		InstanceId:         app.InstanceID,
 		BillingProducts:    nil,
-		InstanceType:       "t2.micro",
-		AccountId:          "1234567890",
-		ImageId:            "ami-123456",
-		PendingTime:        "2016-04-15T12:14:15Z",
+		InstanceType:       app.InstanceType,
+		AccountId:          app.AccountID,
+		ImageId:            app.AmiID,
+		PendingTime:        app.StartTime.Format(time.RFC3339),
 		Architecture:       "x86_64",
 		KernelId:           nil,
 		RamdiskId:          nil,

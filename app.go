@@ -2,6 +2,7 @@ package main
 
 import (
 	"runtime"
+	"time"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/pflag"
@@ -13,6 +14,7 @@ type App struct {
 	AvailabilityZone   string
 	AppPort            string
 	Hostname           string
+	AccountID          string
 	InstanceID         string
 	InstanceType       string
 	InstanceProfileArn string
@@ -22,6 +24,7 @@ type App struct {
 	Verbose            bool
 	VpcID              string
 	AmiID              string
+	StartTime          time.Time
 }
 
 func main() {
@@ -41,6 +44,7 @@ func (app *App) addFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&app.AvailabilityZone, "availability-zone", app.AvailabilityZone, "Availability zone")
 	fs.StringVar(&app.AppPort, "app-port", app.AppPort, "Http port")
 	fs.StringVar(&app.Hostname, "hostname", app.Hostname, "ec2 instance hostname")
+	fs.StringVar(&app.AccountID, "account-id", app.AccountID, "Account ID")
 	fs.StringVar(&app.InstanceID, "instance-id", app.InstanceID, "ec2 instance id")
 	fs.StringVar(&app.InstanceType, "instance-type", app.InstanceType, "ec2 instance type")
 	fs.StringVar(&app.InstanceProfileArn, "instance-profile-arn", app.InstanceProfileArn, "IAM InstanceProfileArn")
